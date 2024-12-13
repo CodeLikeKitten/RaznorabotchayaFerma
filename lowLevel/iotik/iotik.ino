@@ -5,17 +5,15 @@
 #include <Wire.h>
 #include "SparkFun_SGP30_Arduino_Library.h"
 #include <BH1750.h>
-
-#include "pinout.h"
-#include "consts.h"
-
 #include <WiFi.h>
 #include <NetworkClient.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
-
 #include <HTTPClient.h>
 
+#include "pinout.h"
+#include "consts.h"
+#include "settings.h"
 
 BME280I2C bme;
 BH1750 lightMeter;
@@ -89,11 +87,6 @@ void setup() {
 
   server.on("/", handleRoot);
 
-  server.on("/inline", []() {
-    server.send(200, "text/plain", "this works as well");
-    Serial.println("ABOABOBASDA");
-  });
-
   server.onNotFound(handleNotFound);
 
   server.begin();
@@ -123,6 +116,8 @@ void loop() {
     lux = lightMeter.readLightLevel();
     Serial.println(output);
     last_measure_time = millis();
+
+    //sendRequest();
   }
   server.handleClient();
 }
@@ -130,13 +125,14 @@ void loop() {
 void makeJSON()
 {
   JsonDocument doc;
-  doc["temp"] = temp;
-  doc["pressure"] = pres;
-  doc["humidity"] = hum;
+  doc["Farm_Name"] = MyHostName;
+  doc["Air_Temperature"] = temp;
+  doc["Pressure"] = pres;
+  doc["Humidity"] = hum;
   doc["CO2"] = sgp30.CO2;
   doc["TVOC"] = sgp30.TVOC;
-  doc["Soil temperature"] = tempSoil;
-  doc["Soil humidity"] = humiditySoil;
+  doc["Soil_Temperature"] = tempSoil;
+  doc["Soil_Humidity"] = humiditySoil;
   doc["Illumination"] = lux;
   serializeJson(doc, output);
 }
@@ -153,4 +149,31 @@ String WebPage(){
   index += "</p></body>";
   index += "</html>";
   return index;
+}
+
+void sendRequest()
+{
+  String jsonStr;
+  jsonStr = WebPage();
+  HTTPClient http;
+  http.begin(serverAddress);
+  Serial.print("Request sended");
+  // start connection and send HTTP header
+  int httpCode = http.POST(jsonStr);
+
+  // httpCode will be negative on error
+  if (httpCode > 0) {
+    // HTTP header has been send and Server response header has been handled
+    Serial.printf("[HTTP] POST... code: %d\n", httpCode);
+
+    // file found at server
+    if (httpCode == HTTP_CODE_OK) {
+      String payload = http.getString();
+      Serial.println(payload);
+    }
+  } else {
+    Serial.printf("Request error: %s\n", http.errorToString(httpCode).c_str());
+  }
+
+  http.end();
 }
