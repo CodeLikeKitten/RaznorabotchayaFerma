@@ -14,6 +14,8 @@
 #include <WebServer.h>
 #include <ESPmDNS.h>
 
+#include <HTTPClient.h>
+
 
 BME280I2C bme;
 BH1750 lightMeter;
