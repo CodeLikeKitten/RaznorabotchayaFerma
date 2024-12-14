@@ -27,30 +27,55 @@ Web-приложение, позволяющее отображать и иск�
 ## Структура проекта
 
 project-main/
+
 ├── backend/
+
 │   ├── app/
+
 │   │   ├── __init__.py
+
 │   │   ├── main.py
+
 │   │   ├── models.py
+
 │   │   ├── database.py
+
 │   │   ├── crud.py
+
 │   │   └── schemas.py
+
 │   ├── data/
+
 │   │   └── data.json
+
 │   ├── test.db
+
 │   └── requirements.txt
+
 ├── frontend/
+
 │   ├── public/
+
 │   │   └── index.html
+
 │   ├── src/
+
 │   │   ├── assets/
+
 │   │   ├── components/
+
 │   │   │   ├── TableComponent.vue
+
 │   │   │   ├── PaginationComponent.vue
+
 │   │   │   └── SearchComponent.vue
+
 │   │   ├── App.vue
+
 │   │   ├── main.js
+
 │   │   └── router.js
+
 │   └── package.json
 
 
