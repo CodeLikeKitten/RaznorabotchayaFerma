@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+sqlalchemy
+alembic
+pydantic
+requests
+
+# npm install -g @vue/cli
+# npm install axios
+# npm run serve
