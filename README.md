@@ -25,59 +25,14 @@
 Web-приложение, позволяющее отображать и искать записи в таблице по дате и времени снятия измерения или по названию сити-фермы. 
 Проект включает фронтенд, написанный на Vue.js, и бэкенд на FastAPI. В качестве базы данных используется SQLite с SQLAlchemy.
 
-## Структура проекта
-
-project-main/
-
-├── backend/
-
-│   ├── app/
-
-│   │   ├── __init__.py
-
-│   │   ├── main.py
-
-│   │   ├── models.py
-
-│   │   ├── database.py
-
-│   │   ├── crud.py
-
-│   │   └── schemas.py
-
-│   ├── data/
-
-│   │   └── data.json
-
-│   ├── test.db
-
-│   └── requirements.txt
-
-├── frontend/
-
-│   ├── public/
-
-│   │   └── index.html
-
-│   ├── src/
-
-│   │   ├── assets/
-
-│   │   ├── components/
-
-│   │   │   ├── TableComponent.vue
-
-│   │   │   ├── PaginationComponent.vue
-
-│   │   │   └── SearchComponent.vue
-
-│   │   ├── App.vue
-
-│   │   ├── main.js
-
-│   │   └── router.js
-
-│   └── package.json
+## Файлы
+- main.py - основной файл с описанием API;
+- database.py- файл, который конфигурирует базу данных;
+- models.py - модель элемента бд;
+- schemas.py - схема экземпляра базы данных;
+- App.vue - основной файл конфигурации фронтенда;
+- SeаrchComponent.vue - vue-компонент поиска по странице;
+- TableComponent.vue - vue-компонент отрисовки таблицы.
 
 
 # Принцип работы
